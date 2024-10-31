@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulação de Arduino - LED Blink</title>
+  <style>
+    /* Estilo para a "placa Arduino" */
+    .arduino-board {
+      width: 200px;
+      height: 120px;
+      background-color: #004080; /* Cor azul da placa */
+      border-radius: 10px;
+      position: relative;
+      margin: 50px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Estilo para o LED */
+    .led {
+      width: 30px;
+      height: 30px;
+      background-color: grey; /* LED desligado */
+      border-radius: 50%;
+      transition: background-color 0.3s ease;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Botão de controle */
+    .controls {
+      text-align: center;
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="arduino-board">
+    <div class="led" id="led"></div>
+  </div>
+  <div class="controls">
+    <button id="toggleButton">Iniciar Simulação</button>
+  </div>
+
+  <script>
+    // Variáveis globais
+    let ledState = false; // Estado do LED (true para ON, false para OFF)
+    let intervalId = null; // Armazena o ID do setInterval para iniciar/parar
+
+    // Função que alterna o estado do LED
+    function toggleLed() {
+      ledState = !ledState; // Alterna o estado do LED
+      const ledElement = document.getElementById("led");
+
+      // Atualiza a cor do LED com base no estado
+      ledElement.style.backgroundColor = ledState ? "red" : "grey";
+    }
+
+    // Função para iniciar/parar a simulação
+    function toggleSimulation() {
+      const button = document.getElementById("toggleButton");
+
+      if (intervalId) {
+        clearInterval(intervalId); // Para a simulação se já estiver rodando
+        intervalId = null;
+        button.textContent = "Iniciar Simulação";
+      } else {
+        intervalId = setInterval(toggleLed, 1000); // Inicia a simulação
+        button.textContent = "Parar Simulação";
+      }
+    }
+
+    // Adiciona evento ao botão
+    document.getElementById("toggleButton").addEventListener("click", toggleSimulation);
+  </script>
+
+</body>
+</html>
